@@ -88,8 +88,9 @@ module Technoweenie # :nodoc:
 
           def rename_file
             return unless @old_filename && @old_filename != filename
-            old_full_filename = File.join(base_path, @old_filename)
-            ftp_object.rename old_full_filename, full_filename
+            cd = ftp_config[:cd].present? ? ftp_config[:cd] : ''
+            old_full_filename = File.join(cd, base_path, @old_filename)
+            ftp_object.rename old_full_filename, File.join(cd,full_filename)
             @old_filename = nil
             true
           end
