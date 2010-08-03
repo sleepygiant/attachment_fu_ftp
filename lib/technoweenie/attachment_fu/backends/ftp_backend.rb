@@ -107,7 +107,8 @@ module Technoweenie # :nodoc:
               end
             end
             ftp.passive = true # make sure we're in passive mode
-            ftp.putbinaryfile temp_path, File.join(ftp_config[:cd],full_filename) if save_attachment?
+            
+            ftp.putbinaryfile temp_path, File.join((ftp_config[:cd] or ''),full_filename) if save_attachment?
             @old_filename = nil
             true
           end
