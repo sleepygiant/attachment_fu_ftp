@@ -90,7 +90,12 @@ module Technoweenie # :nodoc:
             return unless @old_filename && @old_filename != filename
             cd = ftp_config[:cd].present? ? ftp_config[:cd] : ''
             old_full_filename = File.join(cd, base_path, @old_filename)
-            ftp_object.rename old_full_filename, File.join(cd,full_filename)
+            begin
+              ftp_object.rename old_full_filename, File.join(cd,full_filename)
+            rescue Exception => ex
+              Rails.logger.info "UNABLE TO RENAME FILE!"
+              Rails.logger.info ex.message
+            end            
             @old_filename = nil
             true
           end
