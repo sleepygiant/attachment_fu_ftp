@@ -65,7 +65,7 @@ module Technoweenie # :nodoc:
 
         def current_data
           data = nil
-          ftp_object.getbinaryfile full_filename do |d|
+          ftp_object.getbinaryfile File.join("#{ftp_config[:cd]}",full_filename) do |d|
             data.nil? ? data = d : data << d
           end
           data
