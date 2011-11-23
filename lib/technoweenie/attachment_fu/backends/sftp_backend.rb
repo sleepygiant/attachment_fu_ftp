@@ -22,7 +22,7 @@ module Technoweenie # :nodoc:
         end
 
         def self.ftp_object
-          Net::SFTP.new(ftp_config[:server],ftp_config[:username],:password => ftp_config[:password])
+          Net::SFTP.start(ftp_config[:server],ftp_config[:username],:password => ftp_config[:password])
           # @ftp_object ||= Net::FTP.new(ftp_config[:server],ftp_config[:username],ftp_config[:password])
         end
         
