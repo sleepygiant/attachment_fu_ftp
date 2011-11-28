@@ -22,7 +22,16 @@ module Technoweenie # :nodoc:
         end
 
         def self.ftp_object
-          Net::SFTP.start(ftp_config[:server],ftp_config[:username],:password => ftp_config[:password])
+          if ftp_config[:key].present?
+            auth_config = {
+              :host_key => ftp_config[:key]['type'],
+              :keys     => [ ftp_config[:key]['path'] ]  
+            }
+            #auth_config['compression'] = ftp_config[:key]['compression'] if ftp_config[:key]['compression'].present?            
+          else
+            auth_config = { :password => ftp_config[:password] }
+          end
+          Net::SFTP.start(ftp_config[:server],ftp_config[:username],auth_config)
           # @ftp_object ||= Net::FTP.new(ftp_config[:server],ftp_config[:username],ftp_config[:password])
         end
         
